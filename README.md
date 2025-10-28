@@ -6,4 +6,4 @@ CODECLIMATE: [![Maintainability](https://qlty.sh/gh/davidotalvaro94-collab/proje
 
 CODECLIMATE CODE COVERAGE: [![Code Coverage](https://qlty.sh/gh/davidotalvaro94-collab/projects/python-project-174/coverage.svg)](https://qlty.sh/gh/davidotalvaro94-collab/projects/python-project-174)
 
-Github Actions: 
+Github Actions: [![hexlet-check](https://github.com/davidotalvaro94-collab/python-project-174/actions/workflows/hexlet-check.yml/badge.svg?event=status)](https://github.com/davidotalvaro94-collab/python-project-174/actions/workflows/hexlet-check.yml)
