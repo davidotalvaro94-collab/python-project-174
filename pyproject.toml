@@ -13,13 +13,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["brain_games"]
+packages = ["src/foo"]
 
-[dependency-groups]
-dev = [
-    "ruff>=0.13.1",
-]
-
-packages = [
-  { include = "gendiff" },
-]
+[project.scripts]
+gendiff = "gendiff.scripts.gendiff:main" 

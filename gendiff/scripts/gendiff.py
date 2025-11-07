@@ -1,6 +1,6 @@
 import argparse
 
-from gendiff import generate_diff
+from gendiff.scripts.gendiff import *
 
 
 def main():
@@ -11,6 +11,7 @@ def main():
     parser.add_argument("second_file", help="Second file to compare")
 
     args = parser.parse_args()
+    
 
     # Agregamos en paso 4
     diff = generate_diff("file1.json", "file2.json")
