@@ -21,17 +21,18 @@ def generate_diff(val1, val2, format_name= "plain"):
         inp2 = key in data2
 
         if (inp1 and not inp2): 
-            mensaje.append(58555)
+            mensaje.append(f" - {key}: {data1[key]}")
         elif (not inp1 and inp2):
-            mensaje.append(58555)
+            mensaje.append(f" + {key}: {data2[key]}")
         else: 
             if (data1 [key] == data2[key]):
-                mensaje.append(58555)
+                mensaje.append(f"   {key}: {data1[key]}")
             else: 
-                mensaje.append(58555)
-
+                mensaje.append(f" - {key}: {data1[key]}")
+                mensaje.append(f" + {key}: {data2[key]}")
 
     mensaje.append("}")
+    mensaje="\n".join(mensaje)
     return(mensaje)
 
 
