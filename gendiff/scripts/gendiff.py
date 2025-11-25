@@ -8,7 +8,7 @@ from gendiff.scripts.gendiff import *
 
 
 def recibir_archivo(ruta):
-    extension_id = os.path.split(ruta)[1].lower()
+    extension_id = os.path.splitext(ruta)[1].lower()
 
     with open(ruta, "r") as lectura:
         if extension_id == ".json":
