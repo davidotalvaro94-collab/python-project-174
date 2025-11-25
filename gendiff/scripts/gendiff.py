@@ -1,16 +1,30 @@
 import argparse
 import json
+import yaml
+import os
+
 
 from gendiff.scripts.gendiff import *
 
+
+def recibir_archivo(ruta):
+    extension_id = os.path.split(ruta)[1].lower()
+
+    with open(ruta, "r") as lectura:
+        if extension_id == ".json":
+            return (json.load(lectura))
+        elif extension_id in (".yml", ".yaml"):
+            return(yaml.safe_load(lectura))
+        else: 
+            print ("extensión no value")
+
+
 def generate_diff(val1, val2, format_name= "plain"):
 
-    with open(val1, "r", encoding="utf-8") as lectura1:
-        data1= json.load(lectura1)
-    with open(val2, "r", encoding="utf-8") as lectura2:
-        data2= json.load(lectura2)
+    data1= recibir_archivo(val1)
+    data2= recibir_archivo(val2)
     
-    keys = set(data1.keys()) | set(data2.keys())
+    keys = sorted(set(data1.keys()) | set(data2.keys()))
     
 
     mensaje= ["{"]
@@ -48,7 +62,7 @@ def main():
     
 
     # Agregamos en paso 4
-    diff = generate_diff(args.first_file, args.second_file, args.__format__)
+    diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
 
