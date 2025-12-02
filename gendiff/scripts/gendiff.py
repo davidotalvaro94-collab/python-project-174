@@ -19,7 +19,7 @@ def recibir_archivo(ruta):
             print ("extensión no value")
 
 
-def generate_diff(val1, val2, format_name= "plain"):
+def generate_diff(val1, val2, format_name= "stylish"):
 
     data1= recibir_archivo(val1)
     data2= recibir_archivo(val2)
@@ -61,7 +61,6 @@ def main():
     args = parser.parse_args()
     
 
-    # Agregamos en paso 4
     diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
