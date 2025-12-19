@@ -15,12 +15,13 @@ def recibir_archivo(ruta):
             return (json.load(lectura))
         elif extension_id in (".yml", ".yaml"):
             return(yaml.safe_load(lectura))
-        else: 
+        else:
             print ("extensión no value")
 
 
 def generate_diff(val1, val2, format_name= "stylish"):
-
+    print(val1)
+    print(val2)
     data1= recibir_archivo(val1)
     data2= recibir_archivo(val2)
     
@@ -56,10 +57,12 @@ def main():
     )
     parser.add_argument("first_file", help="First file to compare")
     parser.add_argument("second_file", help="Second file to compare")
-    parser.add_argument("-f","--format", help="set format of output", default="plain")
+    parser.add_argument("-f","--format", help="set format of output", default="stylish")
 
     args = parser.parse_args()
     
+    print(args.first_file)
+    print(args.second_file)
 
     diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
