@@ -20,8 +20,7 @@ def recibir_archivo(ruta):
 
 
 def generate_diff(val1, val2, format_name= "stylish"):
-    print(val1)
-    print(val2)
+    
     data1= recibir_archivo(val1)
     data2= recibir_archivo(val2)
     
