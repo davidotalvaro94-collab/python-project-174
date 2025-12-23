@@ -59,7 +59,7 @@ def test_archivos_modificados(archivo_path):
 
 def estructuras_anidadas (archivo_path) :
     json1 = archivo_path/"file1.json"
-    json2 = archivo_path/"fili2.json"
+    json2 = archivo_path/"file2.json"
     yaml1 = archivo_path/"archivo1.yml"
     yaml2 = archivo_path/"archivo2.yml"
 
