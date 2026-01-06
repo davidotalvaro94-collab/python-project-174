@@ -21,8 +21,10 @@ def recibir_archivo(ruta):
 
 def generate_diff(val1, val2, format_name= "stylish"):
     
-    data1= recibir_archivo(val1)
-    data2= recibir_archivo(val2)
+    data1= recibir_archivo(val1) if isinstance (val1, str) else (val1)
+    data2= recibir_archivo(val2) if isinstance (val2, str) else (val2)
+
+## Agregar instancia
     
     keys = sorted(set(data1.keys()) | set(data2.keys()))
     
@@ -39,11 +41,16 @@ def generate_diff(val1, val2, format_name= "stylish"):
         elif (not inp1 and inp2):
             mensaje.append(f" + {key}: {data2[key]}")
         else: 
-            if (data1 [key] == data2[key]):
+            valorA = data1[key]
+            valorB = data2[key]
+            if isinstance(valorA, dict)  and isinstance(valorB, dict):
+                mensaje.append(f"   {key}: {data1[key]}")
+            elif (data1 [key] == data2[key]):
                 mensaje.append(f"   {key}: {data1[key]}")
             else: 
                 mensaje.append(f" - {key}: {data1[key]}")
                 mensaje.append(f" + {key}: {data2[key]}")
+
 
     mensaje.append("}")
     mensaje="\n".join(mensaje)
