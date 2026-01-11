@@ -19,7 +19,7 @@ def recibir_archivo(ruta):
             print ("extensión no value")
 
 
-def generate_diff(val1, val2, format_name= "stylish"):
+def generate_diff(val1, val2, format_name = "stylish"):
     
     data1= recibir_archivo(val1) if isinstance (val1, str) else (val1)
     data2= recibir_archivo(val2) if isinstance (val2, str) else (val2)
