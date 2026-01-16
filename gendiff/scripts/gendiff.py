@@ -10,7 +10,7 @@ from gendiff.scripts.gendiff import *
 def recibir_archivo(ruta):
     extension_id = os.path.splitext(ruta)[1].lower()
 
-    with open(ruta, "r") as lectura:
+    with open(ruta, "r", encoding="utf-8") as lectura:
         if extension_id == ".json":
             return (json.load(lectura))
         elif extension_id in (".yml", ".yaml"):
@@ -19,12 +19,11 @@ def recibir_archivo(ruta):
             print ("extensión no value")
 
 
-def generate_diff(val1, val2, format_name = "stylish"):
+def generate_diff(val1, val2, format_name = "plain", path = ""):
     
     data1= recibir_archivo(val1) if isinstance (val1, str) else (val1)
     data2= recibir_archivo(val2) if isinstance (val2, str) else (val2)
 
-## Agregar instancia
     
     keys = sorted(set(data1.keys()) | set(data2.keys()))
     
@@ -43,17 +42,22 @@ def generate_diff(val1, val2, format_name = "stylish"):
         else: 
             valorA = data1[key]
             valorB = data2[key]
+
             if isinstance(valorA, dict)  and isinstance(valorB, dict):
-                mensaje.append(f"   {key}: {data1[key]}")
+                repito = generate_diff (valorA, valorB, format_name)
+                #repito = "\n".join("   " + nrep for nrep in repito.splitlines())
+                mensaje.append(f"   {key}: {repito}")
+
             elif (data1 [key] == data2[key]):
                 mensaje.append(f"   {key}: {data1[key]}")
+
             else: 
                 mensaje.append(f" - {key}: {data1[key]}")
                 mensaje.append(f" + {key}: {data2[key]}")
 
 
     mensaje.append("}")
-    mensaje="\n".join(mensaje)
+    #mensaje="\n".join(mensaje)
     return(mensaje)
 
 
@@ -63,13 +67,10 @@ def main():
     )
     parser.add_argument("first_file", help="First file to compare")
     parser.add_argument("second_file", help="Second file to compare")
-    parser.add_argument("-f","--format", help="set format of output", default="stylish")
+    parser.add_argument("-f","--format", help="set format of output", default="plain")
 
     args = parser.parse_args()
     
-    print(args.first_file)
-    print(args.second_file)
-
     diff = generate_diff(args.first_file, args.second_file, args.format)
     print(diff)
 
