@@ -19,11 +19,11 @@ def recibir_archivo(ruta):
             print ("extensión no value")
 
 
-def generate_diff(val1, val2, format_name = "plain", path = ""):
+def generate_diff(data1, data2, format_name = "plain", path = ""):
 
-    if isinstance (val1, str) and  isinstance (val2, str):
-        data1= recibir_archivo(val1)
-        data2= recibir_archivo(val2) 
+    if isinstance (data1, str) and  isinstance (data2, str):
+        data1= recibir_archivo(data1)
+        data2= recibir_archivo(data2) 
     
     keys = sorted(set(data1.keys()) | set(data2.keys()))
     
@@ -32,14 +32,12 @@ def generate_diff(val1, val2, format_name = "plain", path = ""):
     for key in keys:
 
         if key not in data1:
-            #append 1
             mensaje.append({
                 "key": key,
                 "type": "added",
                 "value": data2[key],
             })
         elif key not in data2:
-            #append 2
             mensaje.append({
                 "key": key,
                 "type": "removed",
@@ -54,7 +52,7 @@ def generate_diff(val1, val2, format_name = "plain", path = ""):
                 mensaje.append({
                     "key": key,
                     "type": "nested",
-                    "children": generate_diff(valorA, valorB, format_name, _path_= False),
+                    "children": generate_diff(valorA, valorB, format_name,path= False),
                 })
 
             elif (data1 [key] == data2[key]):
