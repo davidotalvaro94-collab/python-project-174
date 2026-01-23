@@ -20,44 +20,60 @@ def recibir_archivo(ruta):
 
 
 def generate_diff(val1, val2, format_name = "plain", path = ""):
-    
-    data1= recibir_archivo(val1) if isinstance (val1, str) else (val1)
-    data2= recibir_archivo(val2) if isinstance (val2, str) else (val2)
 
+    if isinstance (val1, str) and  isinstance (val2, str):
+        data1= recibir_archivo(val1)
+        data2= recibir_archivo(val2) 
     
     keys = sorted(set(data1.keys()) | set(data2.keys()))
     
-
-    mensaje= ["{"]
+    mensaje= []
 
     for key in keys:
 
-        inp1 = key in data1
-        inp2 = key in data2
-
-        if (inp1 and not inp2): 
-            mensaje.append(f" - {key}: {data1[key]}")
-        elif (not inp1 and inp2):
-            mensaje.append(f" + {key}: {data2[key]}")
-        else: 
+        if key not in data1:
+            #append 1
+            mensaje.append({
+                "key": key,
+                "type": "added",
+                "value": data2[key],
+            })
+        elif key not in data2:
+            #append 2
+            mensaje.append({
+                "key": key,
+                "type": "removed",
+                "value": data1[key],
+            })
+        else:
             valorA = data1[key]
             valorB = data2[key]
 
+
             if isinstance(valorA, dict)  and isinstance(valorB, dict):
-                repito = generate_diff (valorA, valorB, format_name)
-                #repito = "\n".join("   " + nrep for nrep in repito.splitlines())
-                mensaje.append(f"   {key}: {repito}")
+                mensaje.append({
+                    "key": key,
+                    "type": "nested",
+                    "children": generate_diff(valorA, valorB, format_name, _path_= False),
+                })
 
             elif (data1 [key] == data2[key]):
-                mensaje.append(f"   {key}: {data1[key]}")
+                mensaje.append({
+                    "key": key,
+                    "type": "unchanged",
+                    "value": valorA,
+                })
 
             else: 
-                mensaje.append(f" - {key}: {data1[key]}")
-                mensaje.append(f" + {key}: {data2[key]}")
+                mensaje.append({
+                    "key": key,
+                    "type": "updated",
+                    "old": valorA,
+                    "new": valorB,
+                })
 
-
-    mensaje.append("}")
-    #mensaje="\n".join(mensaje)
+    #if __path__:
+    #    return 
     return(mensaje)
 
 
